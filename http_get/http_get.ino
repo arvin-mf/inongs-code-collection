@@ -32,9 +32,9 @@ void parsing(JSONVar myObject){
     Serial.println("parsing gagal!!");
     return;
   }
-  if (myObject.hasOwnProperty("data")){
-    Serial.print("\"Capacity\": ");
-    Serial.println((const char*) myObject["data"]["Capacity"]);
+  if (myObject.hasOwnProperty("name")){
+    Serial.print("\"name\": ");
+    Serial.println(myObject["name"]);
   }
 }
 
@@ -55,15 +55,17 @@ void loop() {
   if ((millis() - lastTime) > timerDelay){
     if (WiFi.status() == WL_CONNECTED){
       HTTPClient http;
-      String apiPath = apiUrl + "?id=10";
+      String apiPath = apiUrl + "?id=5";
+      Serial.println(apiPath);
       http.begin(apiPath.c_str());
       int httpResponseCode = http.GET();
 
       if (httpResponseCode > 0){
         Serial.print("HTTP response code: ");
         Serial.println(httpResponseCode);
+
         String payload = http.getString();
-        Serial.println(payload);
+        // Serial.println(payload);
 
         payload.remove(payload.length()-1, 1);
         payload.remove(0, 1);
